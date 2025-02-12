@@ -13,7 +13,7 @@ More information about PlatformIO Unit Testing:
 
 
 
-Step 1: Generate a CA Certificate
+Step 1: Generate a ROOT_CA Certificate
 
     1. Generate a private key for the CA:
     openssl genpkey -algorithm RSA -out ca.key
