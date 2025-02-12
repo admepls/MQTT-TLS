@@ -1,0 +1,36 @@
+
+This directory is intended for PlatformIO Test Runner and project tests.
+
+Unit Testing is a software testing method by which individual units of
+source code, sets of one or more MCU program modules together with associated
+control data, usage procedures, and operating procedures, are tested to
+determine whether they are fit for use. Unit testing finds problems early
+in the development cycle.
+
+More information about PlatformIO Unit Testing:
+- https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
+
+
+
+
+Step 1: Generate a CA Certificate
+
+    1. Generate a private key for the CA:
+    openssl genpkey -algorithm RSA -out ca.key
+
+    2. Create a self-signed CA certificate:
+    openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
+    // set CN of root_ca to localhost
+
+Step 2: Generate a Server Certificate for Mosquitto
+
+    1. Create a private key for the Mosquitto broker:
+    openssl genpkey -algorithm RSA -out server.key
+
+    2. Generate a Certificate Signing Request (CSR):
+    openssl req -new -key server.key -out server.csr
+    // set the CN of server certificate to the IP address of the broker
+
+    3. Sign the server certificate with the CA:
+    openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial \
+  -out server.crt -days 3650
